@@ -2,9 +2,11 @@
 from django.core.management.base import BaseCommand
 from jardines.models import Jardin
 from niños.models import Niño, Asistencia
-from usuarios.models import Usuario, Actividad
+from usuarios.models import Usuario
 from django.contrib.auth.models import Group
 from faker import Faker
+from datetime import timedelta
+from django.utils import timezone
 
 class Command(BaseCommand):
     help = 'Poblar la base de datos con datos simulados'
@@ -24,61 +26,10 @@ class Command(BaseCommand):
         # Configurar Faker para usar nombres y direcciones en español
         fake = Faker('es_CO')
 
-        self.stdout.write(self.style.WARNING('Creando grupos y permisos...'))
-        groups = {
-            'Administrador': {
-                'name': 'Administrador',
-                'permissions': {
-                    'usuarios.add_usuario': 'Puede añadir usuario',
-                    'usuarios.change_usuario': 'Puede modificar usuario',
-                    'usuarios.delete_usuario': 'Puede eliminar usuario',
-                    'usuarios.view_usuario': 'Puede ver usuario',
-                    'jardines.add_jardin': 'Puede añadir jardín',
-                    'jardines.change_jardin': 'Puede modificar jardín',
-                    'jardines.delete_jardin': 'Puede eliminar jardín',
-                    'jardines.view_jardin': 'Puede ver jardín',
-                    'niños.add_niño': 'Puede añadir niño',
-                    'niños.change_niño': 'Puede modificar niño',
-                    'niños.delete_niño': 'Puede eliminar niño',
-                    'niños.view_niño': 'Puede ver niño',
-                    'niños.view_asistencia': 'Puede ver asistencia',
-                    'publicaciones.add_publicacion': 'Puede añadir publicación',
-                    'publicaciones.change_publicacion': 'Puede modificar publicación',
-                    'publicaciones.delete_publicacion': 'Puede eliminar publicación',
-                    'publicaciones.view_publicacion': 'Puede ver publicación',
-                },
-            },
-            'Madre Comunitaria': {
-                'name': 'Madre Comunitaria',
-                'permissions': {
-                    'niños.view_niño': 'Puede ver niño',
-                    'niños.add_asistencia': 'Puede añadir asistencia',
-                    'niños.change_asistencia': 'Puede modificar asistencia',
-                    'niños.delete_asistencia': 'Puede eliminar asistencia',
-                    'niños.view_asistencia': 'Puede ver asistencia',
-                    'niños.avance_academico': 'Puede añadir avance académico',
-                    'niños.view_avance_academico': 'Puede modificar avance académico',
-                    'niños.view_avance_academico': 'Puede ver avance académico',
-                },
-            },
-            'Acudiente': {
-                'name': 'Acudiente',
-                'permissions': {
-                    'niños.view_niño': 'Puede ver niño',
-                    'niños.avance_academico': 'Puede ver avance académico',
-                    'publicaciones.view_publicacion': 'Puede ver publicación',
-                },
-            },
-        }
-
-        for group in groups:
-            Group.objects.get_or_create(name=group)
-        self.stdout.write(self.style.SUCCESS('Grupos y permisos creados exitosamente'))
-
         self.stdout.write(self.style.WARNING('Creando usuario administrador...'))
         # Crear 1 usuario con el rol administrador
         user = Usuario.objects.create_user(
-            username='Manuels',
+            username='admin',
             password='admin',
             first_name='Manuel',
             last_name='Forero',
@@ -165,14 +116,16 @@ class Command(BaseCommand):
         # Crear asistencias para la ultima semana de lunes a viernes
         estados_asistencia = ['Sano', 'Decaído', 'Enfermo']
         for niño in Niño.objects.all():
+            fecha = timezone.now()
             for i in range(7):
-                fecha = fake.date_this_year(before_today=True, after_today=False)
-                if fecha.weekday() < 5:
+                if fecha.weekday() < 6:
                     Asistencia.objects.create(
                         niño=niño,
                         fecha=fecha,
-                        estado=fake.random_element(elements=estados_asistencia)
+                        estado_nino=fake.random_element(elements=estados_asistencia),
                     )
+                fecha -= timedelta(days=1)
+
         self.stdout.write(self.style.SUCCESS('Asistencias creadas exitosamente'))
 
         self.stdout.write(self.style.SUCCESS('Población de la base de datos completada exitosamente'))

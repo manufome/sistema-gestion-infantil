@@ -16,37 +16,52 @@ Este proyecto es un sistema de gestión para el Instituto Colombiano de Bienesta
 ## Tecnologías utilizadas
 
 -   Django (Backend)
--   HTML, CSS, JavaScript (Frontend)
+-   HTML, HTMX, CSS, JavaScript (Frontend)
 -   Tailwind CSS (Estilos)
 -   SQLite (Base de datos)
 -   Django Background Tasks (Tareas programadas)
+-   NodeJS (Manejo de paquetes de javascript)
 
 ## Instalación
 
 1. Clona el repositorio
-2. Crea un entorno virtual:
+2. Instala nvm si no lo tienes instalado, puedes seguir esta guía: https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/
+3. Crea un entorno virtual:
     ```
     python -m venv venv
     ```
-3. Activa el entorno virtual:
+4. Activa el entorno virtual:
     - Windows: `venv\Scripts\activate`
     - macOS/Linux: `source venv/bin/activate`
-4. Instala las dependencias:
+5. Instala las dependencias:
     ```
     pip install -r requirements.txt
     ```
-5. Configura la base de datos en `settings.py`
-6. Ejecuta las migraciones:
+6. Configura la base de datos en `settings.py`
+7. Crea las migraciones:
+    ```
+    python manage.py makemigrations
+    ```
+8. Ejecuta las migraciones:
     ```
     python manage.py migrate
     ```
-7. Crea un superusuario:
+9. Instala tailwind:
     ```
-    python manage.py createsuperuser
+    python manage.py tailwind install
     ```
-8. Inicia el servidor de desarrollo:
+10. Llena la base de datos con datos de prueba (opcional):
+    ```
+    python manage.py populate
+    ```
+11. Inicia el servidor de desarrollo:
     ```
     python manage.py runserver
+    ```
+12. Para el envio de correos por gmail es necesario crear un archivo .env con el siguiente contenido:
+    ```
+    EMAIL_HOST_USER=tu_correo@gmail.com
+    EMAIL_HOST_PASSWORD=tu_contraseña
     ```
 
 ## Estructura del proyecto

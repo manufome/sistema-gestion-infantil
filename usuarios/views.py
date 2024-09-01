@@ -42,10 +42,7 @@ def register(request):
                 group = Group.objects.get(name=group_name)
                 user.groups.add(group)
                 auth_login(request, user)
-                return JsonResponse({
-                    'success': True,
-                    'redirect_url': redirect_user_dashboard(user)
-                })
+                return redirect(redirect_user_dashboard(user)) 
             else:
                 form.add_error('role', 'Rol no válido')
         return JsonResponse({
