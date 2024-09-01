@@ -27,7 +27,7 @@ def redirect_user_dashboard(user):
     elif user.is_acudiente():
         return '/panel_acudiente/'
     else:
-        return '/home/'
+        return '/'
 
 
 def register(request):
@@ -42,7 +42,12 @@ def register(request):
                 group = Group.objects.get(name=group_name)
                 user.groups.add(group)
                 auth_login(request, user)
-                return redirect(redirect_user_dashboard(user)) 
+                messages.success(request, f'Bienvenido {user.username} a la plataforma de la fundación')
+                redirect_url = redirect_user_dashboard(user)
+                return JsonResponse({
+                    'success': True,
+                    'redirect_url': redirect_url
+                })
             else:
                 form.add_error('role', 'Rol no válido')
         return JsonResponse({
@@ -59,6 +64,7 @@ class UserLoginView(LoginView):
     next_page = 'home'
 
     def get_success_url(self):
+        messages.success(self.request, f'Bienvenido {self.request.user.username} a la plataforma de la fundación')
         return redirect_user_dashboard(self.request.user)
 
 

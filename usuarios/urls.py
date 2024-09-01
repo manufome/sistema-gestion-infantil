@@ -1,6 +1,12 @@
 from django.urls import path
 from django.contrib.auth.views import LogoutView
-from .views import register, home, UserLoginView, admin_dashboard, madre_dashboard, acudiente_dashboard, redirect_dashboard, lista_usuarios, crear_usuario, editar_usuario, eliminar_usuario, dashboard, configuration, user_profile, panel_acudiente, update_profile, change_password, publicaciones
+from .views import (
+    home, UserLoginView, register, admin_dashboard,
+    madre_dashboard, acudiente_dashboard, redirect_dashboard,
+    lista_usuarios, crear_usuario, editar_usuario, eliminar_usuario,
+    dashboard, configuration, user_profile, panel_acudiente,
+    update_profile, change_password, publicaciones
+)
 
 urlpatterns = [
     path('', home, name='home'),

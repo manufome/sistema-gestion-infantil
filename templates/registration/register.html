@@ -4,105 +4,103 @@
 {% block title %}Registrarse{% endblock %}
 
 {% block content %}
-<div class="container flex h-screen w-screen flex-col items-center justify-center">
-    <div
-        class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg transform transition duration-500 hover:scale-105">
-        <!-- Card Header -->
-        <div class="space-y-1 p-4">
-            <h2 class="text-2xl text-center font-bold">Crear Cuenta</h2>
-            <p class="text-center text-sm text-gray-600">
-                Ingrese sus datos para registrarse en el sistema
-            </p>
-        </div>
+<div
+    class="max-w-md w-full mx-auto bg-white border border-gray-300 rounded-2xl p-8 shadow-lg transform transition duration-500 hover:scale-105">
+    <!-- Card Header -->
+    <div class="space-y-1 px-4">
+        <h2 class="text-2xl text-center font-bold">Crear Cuenta</h2>
+        <p class="text-center text-sm text-gray-600">
+            Ingrese sus datos para registrarse en el sistema
+        </p>
+    </div>
 
-        <!-- Card Content -->
-        <div class="p-4">
-            <form id="registerForm">
-                {% csrf_token %}
-                <div class="grid gap-2">
-                    <label for="username" class="block text-sm font-medium text-gray-700">Nombre de usuario</label>
-                    <input id="username" name="username" type="text"
-                        class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
-                        required />
-                    <p id="username-error" class="text-red-500 text-xs mt-1 hidden"></p>
-                </div>
-                <div class="grid gap-2 mt-2">
-                    <label for="first_name" class="block text-sm font-medium text-gray-700">Nombre</label>
-                    <input id="first_name" name="first_name" type="text"
-                        class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
-                        required />
-                    <p id="first_name-error" class="text-red-500 text-xs mt-1 hidden"></p>
-                </div>
-                <div class="grid gap-2 mt-2">
-                    <label for="last_name" class="block text-sm font-medium text-gray-700">Apellido</label>
-                    <input id="last_name" name="last_name" type="text"
-                        class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
-                        required />
-                    <p id="last_name-error" class="text-red-500 text-xs mt-1 hidden"></p>
-                </div>
-                <div class="grid gap-2 mt-2">
-                    <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
-                    <input id="email" name="email" type="email" placeholder="m@example.com"
-                        class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
-                        required />
-                    <p id="email-error" class="text-red-500 text-xs mt-1 hidden"></p>
-                </div>
-                <div class="grid gap-2 mt-2">
-                    <label for="password1" class="block text-sm font-medium text-gray-700">Contraseña</label>
-                    <div class="relative">
-                        <input id="password1" name="password1" type="password"
-                            class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
-                            required />
-                        <button type="button"
-                            class="absolute right-0 top-0 h-full px-3 py-2 text-gray-400 hover:bg-transparent"
-                            onclick="togglePasswordVisibility('password1')">
-                            <i class="fas fa-eye-slash"></i>
-                        </button>
-                    </div>
-                    <p id="password1-error" class="text-red-500 text-xs mt-1 hidden"></p>
-                </div>
-                <div class="grid gap-2 mt-2">
-                    <label for="password2" class="block text-sm font-medium text-gray-700">Confirmar Contraseña</label>
-                    <div class="relative">
-                        <input id="password2" name="password2" type="password"
-                            class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
-                            required />
-                        <button type="button"
-                            class="absolute right-0 top-0 h-full px-3 py-2 text-gray-400 hover:bg-transparent"
-                            onclick="togglePasswordVisibility('password2')">
-                            <i class="fas fa-eye-slash"></i>
-                        </button>
-                    </div>
-                    <p id="password2-error" class="text-red-500 text-xs mt-1 hidden"></p>
-                </div>
-                <div class="grid gap-2 mt-2">
-                    <label for="role" class="block text-sm font-medium text-gray-700">Rol</label>
-                    <select id="role" name="role"
-                        class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
-                        required>
-                        <option value="" disabled selected>Seleccionar rol</option>
-                        <option value="madre_comunitaria">Madre Comunitaria</option>
-                        <option value="acudiente">Acudiente</option>
-                    </select>
-                    <p id="role-error" class="text-red-500 text-xs mt-1 hidden"></p>
-                </div>
-                <button class="w-full mt-4 bg-primary hover:bg-[#669f26] text-white font-bold py-2 px-4 rounded"
-                    type="submit">
-                    <svg class="mr-2 h-4 w-4 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4">
-                        </path>
-                    </svg>
-                    Registrarse
-                </button>
-            </form>
-        </div>
-
-        <!-- Card Footer -->
-        <div class="p-4">
-            <div class="mt-2 text-center text-sm text-gray-600">
-                ¿Ya tiene una cuenta? <a href="/login" class="text-primary hover:underline">Iniciar Sesión</a>
+    <!-- Card Content -->
+    <div class="p-4">
+        <form id="registerForm">
+            {% csrf_token %}
+            <div class="grid gap-2">
+                <label for="username" class="block text-sm font-medium text-gray-700">Nombre de usuario</label>
+                <input id="username" name="username" type="text"
+                    class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                    required />
+                <p id="username-error" class="text-red-500 text-xs mt-1 hidden"></p>
             </div>
+            <div class="grid gap-2 mt-2">
+                <label for="first_name" class="block text-sm font-medium text-gray-700">Nombre</label>
+                <input id="first_name" name="first_name" type="text"
+                    class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                    required />
+                <p id="first_name-error" class="text-red-500 text-xs mt-1 hidden"></p>
+            </div>
+            <div class="grid gap-2 mt-2">
+                <label for="last_name" class="block text-sm font-medium text-gray-700">Apellido</label>
+                <input id="last_name" name="last_name" type="text"
+                    class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                    required />
+                <p id="last_name-error" class="text-red-500 text-xs mt-1 hidden"></p>
+            </div>
+            <div class="grid gap-2 mt-2">
+                <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+                <input id="email" name="email" type="email" placeholder="m@example.com"
+                    class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                    required />
+                <p id="email-error" class="text-red-500 text-xs mt-1 hidden"></p>
+            </div>
+            <div class="grid gap-2 mt-2">
+                <label for="password1" class="block text-sm font-medium text-gray-700">Contraseña</label>
+                <div class="relative">
+                    <input id="password1" name="password1" type="password"
+                        class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                        required />
+                    <button type="button"
+                        class="absolute right-0 top-0 h-full px-3 py-2 text-gray-400 hover:bg-transparent"
+                        onclick="togglePasswordVisibility('password1')">
+                        <i class="fas fa-eye-slash"></i>
+                    </button>
+                </div>
+                <p id="password1-error" class="text-red-500 text-xs mt-1 hidden"></p>
+            </div>
+            <div class="grid gap-2 mt-2">
+                <label for="password2" class="block text-sm font-medium text-gray-700">Confirmar Contraseña</label>
+                <div class="relative">
+                    <input id="password2" name="password2" type="password"
+                        class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                        required />
+                    <button type="button"
+                        class="absolute right-0 top-0 h-full px-3 py-2 text-gray-400 hover:bg-transparent"
+                        onclick="togglePasswordVisibility('password2')">
+                        <i class="fas fa-eye-slash"></i>
+                    </button>
+                </div>
+                <p id="password2-error" class="text-red-500 text-xs mt-1 hidden"></p>
+            </div>
+            <div class="grid gap-2 mt-2">
+                <label for="role" class="block text-sm font-medium text-gray-700">Rol</label>
+                <select id="role" name="role"
+                    class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                    required>
+                    <option value="" disabled selected>Seleccionar rol</option>
+                    <option value="madre_comunitaria">Madre Comunitaria</option>
+                    <option value="acudiente">Acudiente</option>
+                </select>
+                <p id="role-error" class="text-red-500 text-xs mt-1 hidden"></p>
+            </div>
+            <button class="w-full mt-4 bg-primary hover:bg-[#669f26] text-white font-bold py-2 px-4 rounded"
+                type="submit">
+                <svg class="mr-2 h-4 w-4 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4">
+                    </path>
+                </svg>
+                Registrarse
+            </button>
+        </form>
+    </div>
+
+    <!-- Card Footer -->
+    <div class="px-4">
+        <div class="mt-2 text-center text-sm text-gray-600">
+            ¿Ya tiene una cuenta? <a href="/login" class="text-primary hover:underline">Iniciar Sesión</a>
         </div>
     </div>
 </div>

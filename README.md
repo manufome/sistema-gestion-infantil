@@ -46,9 +46,10 @@ Este proyecto es un sistema de gestión para el Instituto Colombiano de Bienesta
     ```
     python manage.py migrate
     ```
-9. Instala tailwind:
+9. Instala tailwind y ejecuta el servidor de desarrollo:
     ```
     python manage.py tailwind install
+    python manage.py tailwind start
     ```
 10. Llena la base de datos con datos de prueba (opcional):
     ```

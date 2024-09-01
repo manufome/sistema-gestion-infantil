@@ -31,8 +31,8 @@ class Command(BaseCommand):
         user = Usuario.objects.create_user(
             username='admin',
             password='admin',
-            first_name='Manuel',
-            last_name='Forero',
+            first_name='admin',
+            last_name='admin',
             email='admin@gmail.com'
         )
         user.groups.add(Group.objects.get(name='Administrador'))
