@@ -14,7 +14,7 @@
                 <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                     <div class="bg-white shadow rounded-lg p-4">
                         <div class="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <h3 class="text-sm font-medium">Niños Registrados</h3>
+                            <h3 class="text-sm font-medium">Estudiantes Registrados</h3>
                             <i class="fas fa-users text-gray-500"></i>
                         </div>
                         <div>
@@ -24,17 +24,17 @@
                     </div>
                     <div class="bg-white shadow rounded-lg p-4">
                         <div class="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <h3 class="text-sm font-medium">Jardines Infantiles</h3>
+                            <h3 class="text-sm font-medium">Instituciones</h3>
                             <i class="fas fa-school text-gray-500"></i>
                         </div>
                         <div>
                             <div class="text-2xl font-bold">{{ total_jardines }}</div>
-                            <p class="text-xs text-gray-500">+{{ nuevos_jardines }} nuevos centros</p>
+                            <p class="text-xs text-gray-500">+{{ nuevos_jardines }} nuevas instituciones</p>
                         </div>
                     </div>
                     <div class="bg-white shadow rounded-lg p-4">
                         <div class="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <h3 class="text-sm font-medium">Madres Comunitarias</h3>
+                            <h3 class="text-sm font-medium">Docentes</h3>
                             <i class="fas fa-user-friends text-gray-500"></i>
                         </div>
                         <div>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="bg-white shadow rounded-lg p-4">
                         <div class="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <h3 class="text-sm font-medium">Acudientes</h3>
+                            <h3 class="text-sm font-medium">Guardianes</h3>
                             <i class="fas fa-user-friends text-gray-500"></i>
                         </div>
                         <div>
@@ -89,7 +89,7 @@
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Niños', 'Jardines', 'Madres Comunitarias', 'Acudientes'],
+                labels: ['Estudiantes', 'Instituciones', 'Docentes', 'Guardianes'],
                 datasets: [{
                     label: 'Cantidad',
                     data: ['{{ total_niños|escapejs }}', '{{ total_jardines|escapejs }}', '{{ total_madres_comunitarias|escapejs }}', '{{ total_acudientes|escapejs }}'],

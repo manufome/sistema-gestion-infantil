@@ -1,0 +1,18 @@
+{% if niño %}
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div>
+        <label class="block text-sm font-medium text-gray-700">Nombre</label>
+        <p class="font-medium" id="child-name">{{ niño.nombre }} {{ niño.guardian.last_name }}</p>
+    </div>
+    <div>
+        <label class="block text-sm font-medium text-gray-700">Fecha de Nacimiento</label>
+        <p class="font-medium" id="child-dob">{{ niño.fecha_nacimiento }}</p>
+    </div>
+    <div>
+        <label class="block text-sm font-medium text-gray-700">Guardian</label>
+        <p class="font-medium" id="child-guardian">{{ niño.guardian }}</p>
+    </div>
+</div>
+{% else %}
+<p class="text-sm text-gray-500 mt-2">Selecciona un estudiante para ver su información.</p>
+{% endif %}

@@ -17,10 +17,10 @@
                     data-tab-target="#inasistencias-enfermedad">Inasistencias por Enfermedad</button>
                 <button
                     class="px-4 py-2 font-medium text-sm text-gray-600 hover:text-gray-800 border-b-2 border-transparent hover:border-primary transition-colors duration-200"
-                    data-tab-target="#niños-por-jardin">Niños por Jardín</button>
+                    data-tab-target="#students-por-institution">Estudiantes por Institución</button>
                 <button
                     class="px-4 py-2 font-medium text-sm text-gray-600 hover:text-gray-800 border-b-2 border-transparent hover:border-primary transition-colors duration-200"
-                    data-tab-target="#jardines-no-aprobados">Jardines No Aprobados</button>
+                    data-tab-target="#institutions-no-aprobadas">Instituciones No Aprobadas</button>
             </div>
         </div>
 
@@ -31,11 +31,11 @@
         <div id="inasistencias-enfermedad" class="space-y-4 hidden">
             {% include "reportes/partials/reporte_inasistencias_enfermedad.html" %}
         </div>
-        <div id="niños-por-jardin" class="space-y-4 hidden">
-            {% include "reportes/partials/reporte_niños_por_jardin.html" %}
+        <div id="students-por-institution" class="space-y-4 hidden">
+            {% include "reportes/partials/reporte_students_por_institution.html" %}
         </div>
-        <div id="jardines-no-aprobados" class="space-y-4 hidden">
-            {% include "reportes/partials/reporte_jardines_no_aprobados.html" %}
+        <div id="institutions-no-aprobadas" class="space-y-4 hidden">
+            {% include "reportes/partials/reporte_institutions_no_aprobadas.html" %}
         </div>
     </div>
 </div>
@@ -45,7 +45,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const tabs = document.querySelectorAll('[data-tab-target]');
-        const tabContents = document.querySelectorAll('[id^="asistencia-"], [id^="inasistencias-"], [id^="niños-"], [id^="jardines-"]');
+        const tabContents = document.querySelectorAll('[id^="asistencia-"], [id^="inasistencias-"], [id^="students-"], [id^="institutions-"]');
 
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {

@@ -1,0 +1,28 @@
+<div class="bg-white shadow-lg rounded-xl p-8">
+    <h3 class="text-3xl font-bold mb-6 text-gray-800">Reporte de Instituciones No Aprobadas</h3>
+
+    {% if hay_jardines_no_aprobados %}
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {% for jardin in jardines_no_aprobados %}
+        <div
+            class="bg-gradient-to-br from-red-50 to-gray-100 rounded-lg p-6 shadow-md transition-all duration-300 hover:shadow-xl">
+            <h4 class="text-xl font-semibold mb-3 text-gray-700">{{ jardin.nombre }}</h4>
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-sm font-medium text-gray-600">Estado:</span>
+                <span
+                    class="px-3 py-1 text-xs font-semibold {% if jardin.estado == 'En trámite' %}bg-yellow-200 text-yellow-800{% else %}bg-red-200 text-red-800{% endif %} rounded-full">
+                    {{ jardin.estado }}</span>
+            </div>
+            <div class="text-gray-600">
+                <i class="fas fa-map-marker-alt mr-2"></i>{{ jardin.direccion }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg" role="alert">
+        <p class="font-bold">¡Buenas noticias!</p>
+        <p>Actualmente no hay instituciones en trámite o negadas. Todas las instituciones están aprobadas.</p>
+    </div>
+    {% endif %}
+</div>

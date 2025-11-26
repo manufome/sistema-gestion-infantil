@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block title %}Dashboard Madre Comunitaria{% endblock %}
+{% block title %}Dashboard Docente{% endblock %}
 
 {% block content %}
 <div class="container mx-auto p-4 md:p-8">
@@ -9,14 +9,14 @@
         <div class="bg-white shadow-md rounded-lg mb-6">
             <div class="flex justify-between border-b">
                 <div class="p-4 ">
-                    <h2 class="text-xl font-bold">Seleccionar Niño</h2>
-                    <p class="text-sm text-gray-500 mt-2">Elija un niño para ver su avance académico.</p>
+                    <h2 class="text-xl font-bold">Seleccionar Estudiante</h2>
+                    <p class="text-sm text-gray-500 mt-2">Elija un estudiante para ver su avance académico.</p>
                 </div>
                 <div class="p-4">
-                    <select name="jardin" id="jardin" hx-get="{% url 'avance_academico' %}" hx-target="#childSelect"
-                        hx-indicator="#loading"
+                    <select name="jardin" id="jardin" hx-get="{% url 'students:avance_academico' %}"
+                        hx-target="#childSelect" hx-indicator="#loading"
                         class="block min-w-60 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
-                        <option value="">Selecciona un jardín</option>
+                        <option value="">Selecciona una institución</option>
                         {% for jardin in jardines %}
                         <option value="{{jardin.id}}">{{jardin.nombre}}</option>
                         {% endfor %}
@@ -24,84 +24,70 @@
                 </div>
             </div>
             <div class="p-4">
-                <select id="childSelect" name="niño_id" hx-get="{% url 'avance_academico' %}" hx-target="#children-info"
-                    hx-indicator="#loading"
+                <select id="childSelect" name="niño_id" hx-get="{% url 'students:avance_academico' %}"
+                    hx-target="#children-info" hx-indicator="#loading"
                     class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                     form="progress-form" required>
-                    <option value="">Selecciona un niño</option>
+                    <option value="">Selecciona un estudiante</option>
                     {% for niño in niños %}
-                    <option value="{{ niño.id }}">{{ niño.nombre }} {{ niño.acudiente.last_name }} - {{
-                        niño.jardin.nombre }}</option>
+                    <option value="{{ niño.id }}">{{ niño.nombre }} {{ niño.guardian.last_name }} - {{
+                        niño.institution.nombre }}</option>
                     {% endfor %}
                 </select>
             </div>
         </div>
-        <!-- Tarjeta de Información del Niño -->
-        <div class="bg-white shadow-md rounded-lg mb-6">
-            <div class="p-4 border-b">
-                <h2 class="text-xl font-bold">Información del Niño</h2>
-
-            </div>
-            <div id="children-info" class="p-4">
-                {%include "madre/partials/info_niño_avance.html"%}
-            </div>
-        </div>
-
-        <!-- Tarjeta para Actualizar Progreso -->
-        <div class="bg-white shadow-md rounded-lg">
-            <div class="p-4 border-b">
-                <h2 class="text-xl font-bold">Actualizar Progreso</h2>
-            </div>
-            <div class="p-4">
-                <form method="post" id="progress-form" class="space-y-4">
-                    {% csrf_token %}
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="space-y-2">
-                            <label for="date" class="block text-sm font-medium text-gray-700">Fecha</label>
-                            <div class="relative">
-                                <input id="date" name="date" type="date"
-                                    class="block w-full border border-gray-300 rounded-md py-2 px-3 pl-10 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
-                                    required />
-                                <i
-                                    class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5"></i>
-
-                            </div>
-                        </div>
-                        <div class="space-y-2">
-                            <label for="nivel" class="block text-sm font-medium text-gray-700">Nivel</label>
-                            <select id="nivel" name="nivel"
-                                class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
-                                required>
-                                <option value="" disabled selected>Seleccionar nivel</option>
-                                {% for nivel in niveles %}
-                                <option value="{{ nivel }}">{{ nivel }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="space-y-2">
-                        <label for="nota" class="block text-sm font-medium text-gray-700">Calificación</label>
-                        <select id="nota" name="nota"
-                            class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
-                            required>
-                            <option value="" disabled selected>Seleccionar nota</option>
-                            {% for key, nota in notas %}
-                            <option value="{{ key }}">{{ nota }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="space-y-2">
-                        <label for="comments" class="block text-sm font-medium text-gray-700">Comentarios</label>
-                        <textarea id="comments" name="comments"
-                            class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"></textarea>
-                    </div>
-                    <button type="submit"
-                        class="w-full bg-primary hover:bg-[#669f26] text-white py-2 px-4 rounded-md flex items-center justify-center">
-                        <i class="fas fa-check-circle mr-2"></i>
-                        Actualizar Progreso
-                    </button>
-                </form>
-            </div>
-        </div>
+        <h2 class="text-xl font-bold">Actualizar Progreso</h2>
     </div>
-    {% endblock %}
+    <div class="p-4">
+        <form method="post" id="progress-form" class="space-y-4">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-2">
+                    <label for="date" class="block text-sm font-medium text-gray-700">Fecha</label>
+                    <div class="relative">
+                        <input id="date" name="date" type="date"
+                            class="block w-full border border-gray-300 rounded-md py-2 px-3 pl-10 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                            required />
+                        <i
+                            class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5"></i>
+
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label for="nivel" class="block text-sm font-medium text-gray-700">Nivel</label>
+                    <select id="nivel" name="nivel"
+                        class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                        required>
+                        <option value="" disabled selected>Seleccionar nivel</option>
+                        {% for nivel in niveles %}
+                        <option value="{{ nivel }}">{{ nivel }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="space-y-2">
+                <label for="nota" class="block text-sm font-medium text-gray-700">Calificación</label>
+                <select id="nota" name="nota"
+                    class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                    required>
+                    <option value="" disabled selected>Seleccionar nota</option>
+                    {% for key, nota in notas %}
+                    <option value="{{ key }}">{{ nota }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="space-y-2">
+                <label for="comments" class="block text-sm font-medium text-gray-700">Comentarios</label>
+                <textarea id="comments" name="comments"
+                    class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"></textarea>
+            </div>
+            <button type="submit"
+                class="w-full bg-primary hover:bg-[#669f26] text-white py-2 px-4 rounded-md flex items-center justify-center">
+                <i class="fas fa-check-circle mr-2"></i>
+                Actualizar Progreso
+            </button>
+        </form>
+    </div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,4 @@
+<option value="">Selecciona un estudiante</option>
+{% for niño in niños %}
+<option value="{{ niño.id }}">{{ niño.nombre }} {{ niño.guardian.last_name }} - {{ niño.institution.nombre }}</option>
+{% endfor %}

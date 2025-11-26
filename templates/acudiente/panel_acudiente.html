@@ -6,16 +6,16 @@
     <h1 class="text-3xl font-bold mb-6">Panel del Acudiente</h1>
     <div class="bg-white shadow-md rounded-lg mb-6">
         <div class="p-4 border-b">
-            <h2 class="text-xl font-semibold">Seleccionar Niño</h2>
-            <p class="text-gray-600">Elija un niño para ver su avance académico</p>
+            <h2 class="text-xl font-semibold">Seleccionar Estudiante</h2>
+            <p class="text-gray-600">Elija un estudiante para ver su avance académico</p>
         </div>
         <div class="p-4">
-            <select id="childSelect" name="niño" hx-get="{% url 'panel_acudiente' %}" hx-target="#avance"
+            <select id="childSelect" name="student" hx-get="{% url 'panel_acudiente' %}" hx-target="#avance"
                 hx-trigger="change"
                 class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
-                <option value="" disabled selected>Seleccionar niño</option>
-                {%for niño in niños%}
-                <option value="{{niño.pk}}">{{niño.nombre}}</option>
+                <option value="" disabled selected>Seleccionar estudiante</option>
+                {%for student in students%}
+                <option value="{{student.pk}}">{{student.nombre}}</option>
                 {%endfor%}
             </select>
         </div>
@@ -29,8 +29,7 @@
                     Académico</button>
                 <button onclick="showTab('publicaciones')" hx-get="{% url 'panel_acudiente' %}?publicacion=true"
                     hx-target="#publicaciones-content"
-                    class="text-gray-700 px-4 py-2 border-b-2 border-transparent hover:border-primary">Publicaciones
-                    ICBF</button>
+                    class="text-gray-700 px-4 py-2 border-b-2 border-transparent hover:border-primary">Publicaciones</button>
             </div>
         </div>
         <div id="avance" class="hidden">
@@ -39,8 +38,8 @@
         <div id="publicaciones" class="hidden">
             <div class="bg-white shadow-md rounded-lg">
                 <div class="p-4 border-b">
-                    <h2 class="text-xl font-semibold">Publicaciones ICBF</h2>
-                    <p class="text-gray-600">Últimas publicaciones y recursos del ICBF</p>
+                    <h2 class="text-xl font-semibold">Publicaciones</h2>
+                    <p class="text-gray-600">Últimas publicaciones y recursos</p>
                 </div>
                 <div class="p-4">
                     <div class="space-y-4" id="publicaciones-content">

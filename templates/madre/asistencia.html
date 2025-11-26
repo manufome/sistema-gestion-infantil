@@ -6,7 +6,7 @@
 <div class="container mx-auto p-4 md:p-8">
     <h1 class="text-3xl font-bold mb-6">Seguimiento de Asistencia</h1>
     <!-- form para registrar asistencia -->
-    <form method="post" action="{% url 'registrar_asistencia' %}" id="asistencia-form">
+    <form method="post" action="{% url 'students:registrar_asistencia' %}" id="asistencia-form">
         {% csrf_token %}
     </form>
     <!-- Tarjeta para Registrar Asistencia -->
@@ -19,7 +19,7 @@
                 <div class="flex flex-col space-y-1.5">
                     <label for="date" class="text-sm font-medium text-gray-700">Fecha</label>
                     <div class="relative">
-                        <input id="date" name="fecha" type="date" required hx-get="{% url 'asistencia' %}"
+                        <input id="date" name="fecha" type="date" required hx-get="{% url 'students:asistencia' %}"
                             hx-target="#children-list" hx-indicator="#loading" hx-include="#childcare-center"
                             class="block w-full border border-gray-300 rounded-md py-2 px-3 pl-10 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                             form="asistencia-form" />
@@ -28,12 +28,12 @@
                     </div>
                 </div>
                 <div class="flex flex-col space-y-1.5">
-                    <label for="childcare-center" class="text-sm font-medium text-gray-700">Jardín</label>
-                    <select id="childcare-center" name="jardin_id" form="asistencia-form"
-                        hx-get="{% url 'asistencia' %}" hx-target="#children-list" hx-indicator="#loading"
+                    <label for="childcare-center" class="text-sm font-medium text-gray-700">Institución</label>
+                    <select id="childcare-center" name="institution_id" form="asistencia-form"
+                        hx-get="{% url 'students:asistencia' %}" hx-target="#children-list" hx-indicator="#loading"
                         hx-include="#date" required
                         class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
-                        <option value="">Selecciona un jardín</option>
+                        <option value="">Selecciona una institución</option>
                         {% for jardin in jardines %}
                         <option value="{{ jardin.id }}">{{ jardin.nombre }}</option>
                         {% endfor %}
@@ -43,30 +43,16 @@
         </div>
     </div>
 
-    <!-- Tarjeta para Lista de Niños -->
+    <!-- Tarjeta para Lista de Estudiantes -->
     <div class="bg-white shadow-md rounded-lg">
         <div class="p-4 border-b">
-            <h2 class="text-xl font-bold">Niños</h2>
+            <h2 class="text-xl font-bold">Estudiantes</h2>
         </div>
         <div class="p-4">
             <div id="search-container" class="mb-4 relative">
-                <input type="text" id="search" name="search" placeholder="Buscar niños..."
-                    hx-get="{% url 'asistencia' %}" hx-trigger="keyup changed delay:500ms" hx-target="#children-list"
-                    hx-indicator="#loading" hx-include="#date,#childcare-center"
-                    class="block w-full border border-gray-300 rounded-md py-2 px-3 pl-10 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm" />
-                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-            </div>
-            <div class="space-y-4" id="children-list">
-                {% include "madre/partials/lista_niños_asistencia.html" %}
-            </div>
-            <div id="loading" class="htmx-indicator">
-                Cargando...
-            </div>
-            <div id="actions-container" class="mt-6 flex justify-end items-center">
-                <button type="submit" form="asistencia-form"
-                    class="flex items-center bg-primary text-white py-2 px-4 rounded-md hover:bg-[#669f26]">
-                    <i class="fas fa-check-circle mr-2"></i>
-                    Enviar Asistencia
+                class="flex items-center bg-primary text-white py-2 px-4 rounded-md hover:bg-[#669f26]">
+                <i class="fas fa-check-circle mr-2"></i>
+                Enviar Asistencia
                 </button>
             </div>
         </div>

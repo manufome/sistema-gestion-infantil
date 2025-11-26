@@ -11,7 +11,7 @@
     <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-    <title>{% block title %}ICBF Management{% endblock %}</title>
+    <title>{% block title %}Education System{% endblock %}</title>
 </head>
 
 <body class="flex flex-col h-screen overflow-hidden">
@@ -19,9 +19,8 @@
         <div class="mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 justify-between items-center">
                 <div class="flex items-center">
-                    <img src="https://www.icbf.gov.co/sites/default/files/icbf-logo.png" alt="Logo ICBF"
-                        class="mr-2 h-8 w-8" />
-                    <span class="text-lg font-bold text-primary">ICBF Management</span>
+                    <i class="fas fa-graduation-cap text-primary text-2xl mr-2"></i>
+                    <span class="text-lg font-bold text-primary">Education System</span>
                 </div>
                 <a href="{% url 'configuration' %}">
                     <div class="flex items-center">
@@ -55,10 +54,10 @@
                             </a>
                         </li>
                         <li
-                            class="{% if 'niños' in request.path %}bg-gray-200 text-primary p-2 rounded{% else %}hover:bg-gray-200 hover:text-primary p-2 rounded{% endif %}">
-                            <a href="{% url 'lista_niños' %}" class="w-full justify-start flex items-center">
+                            class="{% if 'students' in request.path %}bg-gray-200 text-primary p-2 rounded{% else %}hover:bg-gray-200 hover:text-primary p-2 rounded{% endif %}">
+                            <a href="{% url 'students:lista_students' %}" class="w-full justify-start flex items-center">
                                 <i class="fas fa-users mr-2"></i>
-                                Niños
+                                Estudiantes
                             </a>
                         </li>
 
@@ -70,49 +69,49 @@
                             </a>
                         </li>
                         <li
-                            class="{% if 'jardin' in request.path %}bg-gray-200 text-primary p-2 rounded{% else %}hover:bg-gray-200 hover:text-primary p-2 rounded{% endif %}">
-                            <a href="{% url 'lista_jardines' %}" class="w-full justify-start flex items-center">
+                            class="{% if 'institutions' in request.path %}bg-gray-200 text-primary p-2 rounded{% else %}hover:bg-gray-200 hover:text-primary p-2 rounded{% endif %}">
+                            <a href="{% url 'lista_institutions' %}" class="w-full justify-start flex items-center">
                                 <i class="fas fa-school mr-2"></i>
-                                Jardines Infantiles
+                                Instituciones
                             </a>
                         </li>
                         <li
-                            class="{% if 'publicaciones' in request.path %}bg-gray-200 text-primary p-2 rounded{% else %}hover:bg-gray-200 hover:text-primary p-2 rounded{% endif %}">
-                            <a href="{% url 'lista_publicaciones' %}" class="w-full justify-start flex items-center">
+                            class="{% if 'posts' in request.path %}bg-gray-200 text-primary p-2 rounded{% else %}hover:bg-gray-200 hover:text-primary p-2 rounded{% endif %}">
+                            <a href="{% url 'lista_posts' %}" class="w-full justify-start flex items-center">
                                 <i class="fas fa-newspaper mr-2"></i>
                                 Publicaciones
                             </a>
                         </li>
                         {% endif %}
-                        {% if user.is_madre_comunitaria %}
+                        {% if user.is_teacher %}
                         <li
                             class="{% if 'asistencia' in request.path %}bg-gray-200 text-primary p-2 rounded{% else %}hover:bg-gray-200 hover:text-primary p-2 rounded{% endif %}">
-                            <a href="{% url 'asistencia' %}" class="w-full justify-start flex items-center">
+                            <a href="{% url 'students:asistencia' %}" class="w-full justify-start flex items-center">
                                 <i class="fas fa-calendar-check mr-2"></i>
                                 Asistencia
                             </a>
                         </li>
                         <li
                             class="{% if 'avance_academico' in request.path %}bg-gray-200 text-primary p-2 rounded{% else %}hover:bg-gray-200 hover:text-primary p-2 rounded{% endif %}">
-                            <a href="{% url 'avance_academico' %}" class="w-full justify-start flex items-center">
+                            <a href="{% url 'students:avance_academico' %}" class="w-full justify-start flex items-center">
                                 <i class="fas fa-book mr-2"></i>
                                 Avance académico
                             </a>
                         </li>
                         <li
-                            class="{% if 'nuevas_publicaciones' in request.path %}bg-gray-200 text-primary p-2 rounded{% else %}hover:bg-gray-200 hover:text-primary p-2 rounded{% endif %}">
-                            <a href="{% url 'nuevas_publicaciones' %}" class="w-full justify-start flex items-center">
+                            class="{% if 'publicaciones' in request.path %}bg-gray-200 text-primary p-2 rounded{% else %}hover:bg-gray-200 hover:text-primary p-2 rounded{% endif %}">
+                            <a href="{% url 'publicaciones' %}" class="w-full justify-start flex items-center">
                                 <i class="fas fa-newspaper mr-2"></i>
                                 Publicaciones
                             </a>
                         </li>
                         {% endif %}
-                        {% if user.is_acudiente %}
+                        {% if user.is_guardian %}
                         <li
                             class="{% if 'panel_acudiente' in request.path %}bg-gray-200 text-primary p-2 rounded{% else %}hover:bg-gray-200 hover:text-primary p-2 rounded{% endif %}">
                             <a href="{% url 'panel_acudiente' %}" class="w-full justify-start flex items-center">
                                 <i class="fas fa-book mr-2"></i>
-                                Panel del acudiente
+                                Panel del Acudiente
                             </a>
                         </li>
                         {% endif %}
