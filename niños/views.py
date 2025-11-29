@@ -2,7 +2,7 @@ from django.db import IntegrityError
 from .models import Niño, AvanceAcademico
 from datetime import datetime
 from django.shortcuts import render, redirect, get_object_or_404
-from datetime import date, datetime
+from datetime import date, datetime, time
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Niño, Asistencia, AvanceAcademico
 from jardines.models import Jardin
@@ -170,7 +170,27 @@ def asistencia(request):
 @user_passes_test(lambda user: user.is_madre_comunitaria())
 def registrar_asistencia(request):
     if request.method == 'POST':
-        fecha = request.POST.get('fecha', date.today())
+        # Validar que sea el día actual
+        fecha_str = request.POST.get('fecha')
+        if fecha_str:
+            fecha = datetime.strptime(fecha_str, '%Y-%m-%d').date()
+        else:
+            fecha = date.today()
+        
+        # Validar que la fecha sea hoy
+        if fecha != date.today():
+            messages.error(request, 'Solo se puede registrar asistencia para el día de hoy')
+            return redirect('asistencia')
+        
+        # Validar horario (8:00 AM - 10:00 AM)
+        hora_actual = datetime.now().time()
+        hora_inicio = time(8, 0)  # 8:00 AM
+        hora_fin = time(10, 0)    # 10:00 AM
+        
+        if not (hora_inicio <= hora_actual <= hora_fin):
+            messages.error(request, 'La asistencia solo puede registrarse entre las 8:00 AM y las 10:00 AM')
+            return redirect('asistencia')
+        
         niños = request.POST.getlist('niños')
         for niño_id in niños:
             niño = get_object_or_404(Niño, pk=niño_id)

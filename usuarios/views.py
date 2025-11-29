@@ -16,7 +16,9 @@ from django.utils import timezone
 from datetime import timedelta
 
 def home(request):
-    return render(request, 'home.html')
+    if request.user.is_authenticated:
+        return redirect('redirect_dashboard')
+    return redirect('login')
 
 
 def redirect_user_dashboard(user):
