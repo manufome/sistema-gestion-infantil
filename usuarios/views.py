@@ -64,8 +64,14 @@ class UserLoginView(LoginView):
     next_page = 'home'
 
     def get_success_url(self):
-        messages.success(self.request, f'Bienvenido {self.request.user.username} a la plataforma de la fundación')
-        return redirect_user_dashboard(self.request.user)
+        user = self.request.user
+        messages.success(self.request, f'Bienvenido {user.username} a la plataforma de la fundación')
+        
+        # Check if user needs to change password
+        if user.needs_password_change:
+            messages.warning(self.request, '⚠️ Por favor actualiza tu contraseña inicial. Ve a Configuración para cambiarla.')
+        
+        return redirect_user_dashboard(user)
 
 
 class UserLogoutView(LogoutView):
@@ -174,7 +180,14 @@ def crear_usuario(request):
     if request.method == 'POST':
         form = UsuarioForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
+            # Set default password: FirstName1234 (e.g., Manuel1234)
+            default_password = f"{user.first_name.capitalize()}1234"
+            user.set_password(default_password)
+            user.needs_password_change = True
+            user.save()
+            form.save_m2m()  # Save many-to-many relationships (groups)
+            
             Actividad.objects.create(
                 tipo='creacion',
                 descripcion=f'Nuevo usuario creado: {user.username} con rol {user.get_roles()[0].name}',
@@ -182,7 +195,7 @@ def crear_usuario(request):
                 content_type=ContentType.objects.get_for_model(user),
                 object_id=user.id
             )
-            messages.success(request, f'Usuario {user.username} creado exitosamente con rol {user.get_roles()[0].name}')
+            messages.success(request, f'Usuario {user.username} creado exitosamente con rol {user.get_roles()[0].name}. Contraseña inicial: {default_password}')
             return redirect('lista_usuarios')
     else:
         form = UsuarioForm()
@@ -272,6 +285,9 @@ def change_password(request):
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
+            # Mark that user has changed their password
+            user.needs_password_change = False
+            user.save()
             update_session_auth_hash(request, user)
             messages.success(request, 'Contraseña actualizada exitosamente')
             return redirect('configuration')

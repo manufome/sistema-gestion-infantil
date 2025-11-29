@@ -8,6 +8,37 @@ from jardines.models import Jardin
 
 
 class Niño(models.Model):
+    EPS_CHOICES = [
+        ('COOSALUD EPS-S', 'COOSALUD EPS-S'),
+        ('NUEVA EPS', 'NUEVA EPS'),
+        ('MUTUAL SER', 'MUTUAL SER'),
+        ('SALUD MÍA', 'SALUD MÍA'),
+        ('ALIANSALUD EPS', 'ALIANSALUD EPS'),
+        ('SALUD TOTAL EPS S.A.', 'SALUD TOTAL EPS S.A.'),
+        ('EPS SANITAS', 'EPS SANITAS'),
+        ('EPS SURA', 'EPS SURA'),
+        ('FAMISANAR', 'FAMISANAR'),
+        ('SERVICIO OCCIDENTAL DE SALUD EPS SOS', 'SERVICIO OCCIDENTAL DE SALUD EPS SOS'),
+        ('COMFENALCO VALLE', 'COMFENALCO VALLE'),
+        ('COMPENSAR EPS', 'COMPENSAR EPS'),
+        ('EPM - EMPRESAS PUBLICAS DE MEDELLIN', 'EPM - EMPRESAS PUBLICAS DE MEDELLIN'),
+        ('FONDO DE PASIVO SOCIAL DE FERROCARRILES NACIONALES DE COLOMBIA', 'FONDO DE PASIVO SOCIAL DE FERROCARRILES NACIONALES DE COLOMBIA'),
+        ('CAJACOPI ATLANTICO', 'CAJACOPI ATLANTICO'),
+        ('CAPRESOCA', 'CAPRESOCA'),
+        ('COMFACHOCO', 'COMFACHOCO'),
+        ('COMFAORIENTE', 'COMFAORIENTE'),
+        ('EPS FAMILIAR DE COLOMBIA', 'EPS FAMILIAR DE COLOMBIA'),
+        ('ASMET SALUD', 'ASMET SALUD'),
+        ('EMSSANAR E.S.S.', 'EMSSANAR E.S.S.'),
+        ('CAPITAL SALUD EPS-S', 'CAPITAL SALUD EPS-S'),
+        ('SAVIA SALUD EPS', 'SAVIA SALUD EPS'),
+        ('DUSAKAWI EPSI', 'DUSAKAWI EPSI'),
+        ('ASOCIACION INDIGENA DEL CAUCA EPSI', 'ASOCIACION INDIGENA DEL CAUCA EPSI'),
+        ('ANAS WAYUU EPSI', 'ANAS WAYUU EPSI'),
+        ('MALLAMAS EPSI', 'MALLAMAS EPSI'),
+        ('PIJAOS SALUD EPSI', 'PIJAOS SALUD EPSI'),
+    ]
+    
     registro = models.CharField(max_length=20, unique=True)
     nombre = models.CharField(max_length=150)
     fecha_nacimiento = models.DateField()
@@ -17,7 +48,7 @@ class Niño(models.Model):
         Usuario, on_delete=models.CASCADE, related_name='niños')
     telefono = models.CharField(max_length=15)
     direccion = models.TextField()
-    eps = models.CharField(max_length=100)
+    eps = models.CharField(max_length=100, choices=EPS_CHOICES)
     jardin = models.ForeignKey(
         Jardin, on_delete=models.CASCADE, related_name='niños')
     fecha_registro = models.DateField(auto_now_add=True, null=True, blank=True)
