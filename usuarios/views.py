@@ -267,15 +267,36 @@ def publicaciones(request):
     publicaciones = Publicacion.objects.all()
     return render(request, 'madre/publicaciones.html', {'publicaciones': publicaciones})
 
+
 @login_required
 def update_profile(request):
     if request.method == 'POST':
         user = request.user
-        user.first_name = request.POST.get('first_name')
-        user.last_name = request.POST.get('last_name')
-        user.email = request.POST.get('email')
-        user.save()
-        messages.success(request, 'Perfil actualizado exitosamente')
+        # Store original values
+        original_first_name = user.first_name
+        original_last_name = user.last_name
+        original_email = user.email
+        
+        # Get new values
+        new_first_name = request.POST.get('first_name')
+        new_last_name = request.POST.get('last_name')
+        new_email = request.POST.get('email')
+        
+        # Check if anything changed
+        has_changes = (
+            original_first_name != new_first_name or
+            original_last_name != new_last_name or
+            original_email != new_email
+        )
+        
+        if has_changes:
+            user.first_name = new_first_name
+            user.last_name = new_last_name
+            user.email = new_email
+            user.save()
+            messages.success(request, 'Perfil actualizado exitosamente')
+        else:
+            messages.info(request, 'No se realizaron cambios en el perfil')
     return redirect('configuration')
 
 

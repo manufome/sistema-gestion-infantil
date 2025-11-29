@@ -1,8 +1,8 @@
-# Sistema de Gestión ICBF
+# Sistema de Gestión Infantil
 
 ## Descripción
 
-Este proyecto es un sistema de gestión para el Instituto Colombiano de Bienestar Familiar (ICBF). Está diseñado para administrar información relacionada con jardines infantiles, niños, madres comunitarias y acudientes.
+Este proyecto es un sistema de gestión para jardines infantiles. Está diseñado para administrar información relacionada con jardines infantiles, niños, madres comunitarias y acudientes.
 
 ## Características principales
 
